@@ -149,7 +149,7 @@ export class Faction {
       case 'REDFOR':
         return useColorModeValue('red.200', 'red.700')
       case 'INDEPENDENT':
-        return useColorModeValue('gray.300', 'gray.600')
+        return useColorModeValue('yellow.300', 'yellow.700')
     }
   }
 }

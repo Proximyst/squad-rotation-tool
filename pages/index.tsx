@@ -1,56 +1,63 @@
-import {Button, Table, TableContainer, Tag, Tbody, Td, Tfoot, Th, Thead, Tooltip, Tr, useColorMode} from "@chakra-ui/react";
-import {Layers} from "../components/layer-data";
-import {WarningIcon} from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Flex,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  useColorMode,
+  useColorModeValue,
+  useDisclosure
+} from "@chakra-ui/react";
+import {LayerTable} from "../components/layer-table";
+import {MoonIcon, SunIcon} from "@chakra-ui/icons";
 
 export default function Home(): JSX.Element {
   const {toggleColorMode} = useColorMode()
+  const {isOpen, onOpen, onClose} = useDisclosure()
 
   return <>
-    <Button size={'sm'} onClick={toggleColorMode}>
-      Toggle colour mode
-    </Button>
+    <Flex
+        justifyContent='center'
+        alignItems='center'
+        minHeight='100vh'
+        minWidth='100vw'
+        bg={useColorModeValue('gray.100', 'gray.800')}
+    >
+      <Box
+          width='80vw'
+          height='80vh'
+          padding='20px'
+          bg={useColorModeValue('gray.300', 'gray.700')}
+          borderRadius='20px'
+      >
+        <IconButton
+            size='sm'
+            mx='5px'
+            aria-label='Toggle colour scheme mode'
+            onClick={toggleColorMode}
+            icon={useColorModeValue(<MoonIcon/>, <SunIcon/>)}
+        />
 
-    <TableContainer>
-      <Table variant='simple'>
-        <Thead>
-          <Tr>
-            <Th>Layer name</Th>
-            <Th>Map name</Th>
-            <Th>Game mode</Th>
-            <Th>Tag</Th>
-            <Th>Faction 1</Th>
-            <Th>Faction 2</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {Layers.map(l => {
-            const warning = l.warning
-                ?
-                <Tooltip hasArrow label={l.warning} fontSize='md' placement='right'>
-                  <WarningIcon color='yellow.500'/>
-                </Tooltip>
-                : <></>;
-            return <Tr key={l.layerString}>
-              <Td>{l.layerString} {warning}</Td>
-              <Td><Tag>{l.map.localised}</Tag></Td>
-              <Td><Tag>{l.type.localised}</Tag></Td>
-              <Td><Tag>{l.tag}</Tag></Td>
-              <Td><Tag bg={l.faction1.colour()}>{l.faction1.localised}</Tag></Td>
-              <Td><Tag bg={l.faction2.colour()}>{l.faction2.localised}</Tag></Td>
-            </Tr>;
-          })}
-        </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>Layer name</Th>
-            <Th>Map name</Th>
-            <Th>Game mode</Th>
-            <Th>Tag</Th>
-            <Th>Faction 1</Th>
-            <Th>Faction 2</Th>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
+        <Button size={'sm'} onClick={onOpen} mx='5px'>
+          Open layer list
+        </Button>
+      </Box>
+    </Flex>
+
+    <Modal isOpen={isOpen} onClose={onClose} size='full' scrollBehavior='inside'>
+      <ModalOverlay/>
+      <ModalContent margin='2vw'>
+        <ModalHeader>Layer list</ModalHeader>
+        <ModalCloseButton/>
+        <ModalBody>
+          <LayerTable/>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   </>
 }
