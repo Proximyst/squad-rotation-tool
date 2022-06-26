@@ -1,213 +1,244 @@
-import {useColorModeValue} from "@chakra-ui/react";
+import {Tag, useColorModeValue} from '@chakra-ui/react';
 
 export class LayerType {
-  public static readonly AAS: LayerType = new LayerType('AAS')
-  public static readonly RAAS: LayerType = new LayerType('RAAS')
-  public static readonly Insurgency: LayerType = new LayerType('Insurgency')
-  public static readonly Destruction: LayerType = new LayerType('Destruction')
-  public static readonly Invasion: LayerType = new LayerType('Invasion')
-  public static readonly Seed: LayerType = new LayerType('Seed')
-  public static readonly Skirmish: LayerType = new LayerType('Skirmish')
-  public static readonly TerritoryControl: LayerType = new LayerType('TC', 'Territory Control')
-  public static readonly TrackAttack: LayerType = new LayerType('TA', 'Track Attack')
-  public static readonly Tanks: LayerType = new LayerType('Tanks', 'Tanks')
-  public static readonly Training: LayerType = new LayerType('Training')
-  public static readonly Types: Array<LayerType> = [
+  public static readonly AAS: LayerType = new LayerType('AAS');
+  public static readonly RAAS: LayerType = new LayerType('RAAS');
+  public static readonly INSURGENCY: LayerType = new LayerType('Insurgency');
+  public static readonly DESTRUCTION: LayerType = new LayerType('Destruction');
+  public static readonly INVASION: LayerType = new LayerType('Invasion');
+  public static readonly SEED: LayerType = new LayerType('Seed');
+  public static readonly SKIRMISH: LayerType = new LayerType('Skirmish');
+  public static readonly TERRITORY_CONTROL: LayerType = new LayerType('TC', 'Territory Control');
+  public static readonly TRACK_ATTACK: LayerType = new LayerType('TA', 'Track Attack');
+  public static readonly TANKS: LayerType = new LayerType('Tanks', 'Tanks');
+  public static readonly TRAINING: LayerType = new LayerType('Training');
+
+  public static readonly TYPES: Array<LayerType> = [
     LayerType.AAS,
     LayerType.RAAS,
-    LayerType.Insurgency,
-    LayerType.Destruction,
-    LayerType.Invasion,
-    LayerType.Seed,
-    LayerType.Skirmish,
-    LayerType.TerritoryControl,
-    LayerType.TrackAttack,
-    LayerType.Tanks,
-    LayerType.Training,
-  ]
+    LayerType.INSURGENCY,
+    LayerType.DESTRUCTION,
+    LayerType.INVASION,
+    LayerType.SEED,
+    LayerType.SKIRMISH,
+    LayerType.TERRITORY_CONTROL,
+    LayerType.TRACK_ATTACK,
+    LayerType.TANKS,
+    LayerType.TRAINING,
+  ];
 
-  public readonly name: string
-  public readonly localised: string
-
-  private constructor(name: string, localised: string = name) {
-    this.name = name
-    this.localised = localised
+  private constructor(public readonly name: string, public readonly localised: string = name) {
   }
 
   public static find(name: string): LayerType | undefined {
-    return LayerType.Types.find(t => t.name == name || t.localised == name)
+    return LayerType.TYPES.find(t => t.name == name || t.localised == name);
+  }
+
+  public get asTag(): JSX.Element {
+    return (
+        <Tag>{this.localised}</Tag>
+    );
   }
 }
 
 export class Map {
-  public static readonly AlBasrah: Map = new Map('AlBasrah', 'al-Basrah')
-  public static readonly Anvil: Map = new Map('Anvil')
-  public static readonly BelayaPass = new Map('Belaya', 'Belaya Pass')
-  public static readonly BlackCoast = new Map('BlackCoast', 'Black Coast')
-  public static readonly Chora = new Map('Chora')
-  public static readonly Fallujah = new Map('Fallujah')
-  public static readonly FoolsRoad = new Map('FoolsRoad', 'Fool\'s Road')
-  public static readonly GooseBay = new Map('GooseBay', 'Goose Bay')
-  public static readonly Gorodok = new Map('Gorodok')
-  public static readonly JensensRange = new Map('JensensRange', 'Jensen\'s Range')
-  public static readonly KamdeshHighlands = new Map('Kamdesh', 'Kamdesh Highlands')
-  public static readonly KohatToi = new Map('Kohat', 'Kohat Toi')
-  public static readonly Kokan = new Map('Kokan')
-  public static readonly LashkarValley = new Map('LashkarValley', 'Lashkar Valley')
-  public static readonly LogarValley = new Map('Logar', 'Logar Valley')
-  public static readonly Manic = new Map('Manic', 'Manic-5')
-  public static readonly Mestia = new Map('Mestia')
-  public static readonly Mutaha = new Map('Mutaha')
-  public static readonly Narva = new Map('Narva')
-  public static readonly PacificProvingGrounds = new Map('PacificProvingGrounds', 'Pacific Proving Grounds')
-  public static readonly Skorpo = new Map('Skorpo')
-  public static readonly SumariBala = new Map('Sumari', 'Sumari Bala')
-  public static readonly TallilOutskirts = new Map('Tallil', 'Tallil Outskirts')
-  public static readonly Yehorivka = new Map('Yehorivka')
-  public static readonly Maps: Array<Map> = [
-    Map.AlBasrah,
-    Map.Anvil,
-    Map.BelayaPass,
-    Map.BlackCoast,
-    Map.Chora,
-    Map.Fallujah,
-    Map.FoolsRoad,
-    Map.GooseBay,
-    Map.Gorodok,
-    Map.JensensRange,
-    Map.KamdeshHighlands,
-    Map.KohatToi,
-    Map.Kokan,
-    Map.LashkarValley,
-    Map.LogarValley,
-    Map.Manic,
-    Map.Mestia,
-    Map.Mutaha,
-    Map.Narva,
-    Map.PacificProvingGrounds,
-    Map.Skorpo,
-    Map.SumariBala,
-    Map.TallilOutskirts,
-    Map.Yehorivka,
-  ]
+  public static readonly AL_BASRAH: Map = new Map('AlBasrah', 'al-Basrah');
+  public static readonly ANVIL: Map = new Map('Anvil');
+  public static readonly BELAYA_PASS = new Map('Belaya', 'Belaya Pass');
+  public static readonly BLACK_COAST = new Map('BlackCoast', 'Black Coast');
+  public static readonly CHORA = new Map('Chora');
+  public static readonly FALLUJAH = new Map('Fallujah');
+  public static readonly FOOLS_ROAD = new Map('FoolsRoad', 'Fool\'s Road');
+  public static readonly GOOSE_BAY = new Map('GooseBay', 'Goose Bay');
+  public static readonly GORODOK = new Map('Gorodok');
+  public static readonly JENSENS_RANGE = new Map('JensensRange', 'Jensen\'s Range');
+  public static readonly KAMDESH_HIGHLANDS = new Map('Kamdesh', 'Kamdesh Highlands');
+  public static readonly KOHAT_TOI = new Map('Kohat', 'Kohat Toi');
+  public static readonly KOKAN = new Map('Kokan');
+  public static readonly LASHKAR_VALLEY = new Map('LashkarValley', 'Lashkar Valley');
+  public static readonly LOGAR_VALLEY = new Map('Logar', 'Logar Valley');
+  public static readonly MANIC = new Map('Manic', 'Manic-5');
+  public static readonly MESTIA = new Map('Mestia');
+  public static readonly MUTAHA = new Map('Mutaha');
+  public static readonly NARVA = new Map('Narva');
+  public static readonly PACIFIC_PROVING_GROUNDS = new Map('PacificProvingGrounds', 'Pacific Proving Grounds');
+  public static readonly SKORPO = new Map('Skorpo');
+  public static readonly SUMARI_BALA = new Map('Sumari', 'Sumari Bala');
+  public static readonly TALLIL_OUTSKIRTS = new Map('Tallil', 'Tallil Outskirts');
+  public static readonly YEHORIVKA = new Map('Yehorivka');
 
-  public readonly name: string
-  public readonly localised: string
+  public static readonly MAPS: Array<Map> = [
+    Map.AL_BASRAH,
+    Map.ANVIL,
+    Map.BELAYA_PASS,
+    Map.BLACK_COAST,
+    Map.CHORA,
+    Map.FALLUJAH,
+    Map.FOOLS_ROAD,
+    Map.GOOSE_BAY,
+    Map.GORODOK,
+    Map.JENSENS_RANGE,
+    Map.KAMDESH_HIGHLANDS,
+    Map.KOHAT_TOI,
+    Map.KOKAN,
+    Map.LASHKAR_VALLEY,
+    Map.LOGAR_VALLEY,
+    Map.MANIC,
+    Map.MESTIA,
+    Map.MUTAHA,
+    Map.NARVA,
+    Map.PACIFIC_PROVING_GROUNDS,
+    Map.SKORPO,
+    Map.SUMARI_BALA,
+    Map.TALLIL_OUTSKIRTS,
+    Map.YEHORIVKA,
+  ];
 
-  private constructor(name: string, localised: string = name) {
-    this.name = name
-    this.localised = localised
+  private constructor(public readonly name: string, public readonly localised: string = name) {
   }
 
   public static find(name: string): Map | undefined {
-    return Map.Maps.find(m => m.name == name || m.localised == name)
+    return Map.MAPS.find(m => m.name == name || m.localised == name);
+  }
+
+  public static sortedMapsByLocalised(opts?: { caseSensitive?: boolean }): Array<Map> {
+    const {caseSensitive = false} = opts ?? {};
+    return new Array<Map>(...Map.MAPS).sort((a, b) => {
+      if (caseSensitive) {
+        return a.localised.localeCompare(b.localised);
+      } else {
+        return a.localised.toLocaleLowerCase().localeCompare(b.localised.toLocaleLowerCase());
+      }
+    });
+  }
+
+  public get asTag(): JSX.Element {
+    return (
+        <Tag>{this.localised}</Tag>
+    );
+  }
+
+  /**
+   * @return the layer types that are applicable to this map; sorted by localised name
+   */
+  public findLayerTypes(opts?: { caseSensitiveSort?: boolean }): Array<LayerType> {
+    const {caseSensitiveSort = false} = opts ?? {};
+    return [...new Set(LAYERS.filter(l => l.map.name == this.name).map(l => l.type))]
+    .sort((a, b) => {
+      if (caseSensitiveSort) {
+        return a.localised.localeCompare(b.localised);
+      } else {
+        return a.localised.toLocaleLowerCase().localeCompare(b.localised.toLocaleLowerCase());
+      }
+    });
+  }
+
+  /**
+   * @return the layers that are applicable to this map and layer type; will be sorted by tag
+   */
+  public findLayers(opts?: { type?: LayerType, caseSensitiveSort?: boolean }): Array<Layer> {
+    const {type, caseSensitiveSort = false} = opts ?? {};
+    return [...new Set(LAYERS.filter(l => l.map.name == this.name && (!type || l.type.name == type.name)))]
+    .sort((a, b) => {
+      if (caseSensitiveSort) {
+        return a.tag.localeCompare(b.tag);
+      } else {
+        return a.tag.toLocaleLowerCase().localeCompare(b.tag.toLocaleLowerCase());
+      }
+    });
   }
 }
 
-type FactionType = 'BLUFOR' | 'REDFOR' | 'INDEPENDENT'
+type FactionType = 'BLUFOR' | 'REDFOR' | 'INDEPENDENT';
 
 export class Faction {
-  public static readonly AustralianArmy: Faction = new Faction('AUS', 'Australian Army', 'BLUFOR')
-  public static readonly BritishArmy: Faction = new Faction('GB', 'British Army', 'BLUFOR')
-  public static readonly CanadianArmy: Faction = new Faction('CAF', 'Canadian Army', 'BLUFOR')
-  public static readonly UnitedStatesArmy: Faction = new Faction('US', 'United States Army', 'BLUFOR')
-  public static readonly UnitedStatesMarineCorps: Faction = new Faction('USMC', 'United States Marine Corps', 'BLUFOR')
-  public static readonly RussianGroundForces: Faction = new Faction('RUS', 'Russian Ground Forces', 'REDFOR')
-  public static readonly MiddleEasternAlliance: Faction = new Faction('MEA', 'Middle Eastern Alliance', 'INDEPENDENT')
-  public static readonly Insurgents: Faction = new Faction('INS', 'Insurgents', 'INDEPENDENT')
-  public static readonly IrregularMilitia: Faction = new Faction('MIL', 'Irregular Militia', 'INDEPENDENT')
-  public static readonly Factions: Array<Faction> = [
-    Faction.AustralianArmy,
-    Faction.BritishArmy,
-    Faction.CanadianArmy,
-    Faction.UnitedStatesArmy,
-    Faction.UnitedStatesMarineCorps,
-    Faction.RussianGroundForces,
-    Faction.MiddleEasternAlliance,
-    Faction.Insurgents,
-    Faction.IrregularMilitia,
-  ]
+  public static readonly AUSTRALIAN_ARMY: Faction = new Faction('AUS', 'Australian Army', 'BLUFOR');
+  public static readonly BRITISH_ARMY: Faction = new Faction('GB', 'British Army', 'BLUFOR');
+  public static readonly CANADIAN_ARMY: Faction = new Faction('CAF', 'Canadian Army', 'BLUFOR');
+  public static readonly UNITED_STATES_ARMY: Faction = new Faction('US', 'United States Army', 'BLUFOR');
+  public static readonly UNITED_STATES_MARINE_CORPS: Faction = new Faction('USMC', 'United States Marine Corps', 'BLUFOR');
+  public static readonly RUSSIAN_GROUND_FORCES: Faction = new Faction('RUS', 'Russian Ground Forces', 'REDFOR');
+  public static readonly MIDDLE_EASTERN_ALLIANCE: Faction = new Faction('MEA', 'Middle Eastern Alliance', 'INDEPENDENT');
+  public static readonly INSURGENTS: Faction = new Faction('INS', 'Insurgents', 'INDEPENDENT');
+  public static readonly IRREGULAR_MILITIA: Faction = new Faction('MIL', 'Irregular Militia', 'INDEPENDENT');
 
-  public readonly name: string
-  public readonly localised: string
-  public readonly type: FactionType
+  public static readonly FACTIONS: Array<Faction> = [
+    Faction.AUSTRALIAN_ARMY,
+    Faction.BRITISH_ARMY,
+    Faction.CANADIAN_ARMY,
+    Faction.UNITED_STATES_ARMY,
+    Faction.UNITED_STATES_MARINE_CORPS,
+    Faction.RUSSIAN_GROUND_FORCES,
+    Faction.MIDDLE_EASTERN_ALLIANCE,
+    Faction.INSURGENTS,
+    Faction.IRREGULAR_MILITIA,
+  ];
 
-  private constructor(name: string, localised: string, type: FactionType) {
-    this.name = name
-    this.localised = localised
-    this.type = type
+  private constructor(public readonly name: string, public readonly localised: string, public readonly type: FactionType) {
   }
 
   public static find(name: string): Faction | undefined {
-    return Faction.Factions.find(f => f.name == name || f.localised == name)
+    return Faction.FACTIONS.find(f => f.name == name || f.localised == name);
   }
 
-  public readonly colour: () => string = () => {
-    switch (this.type) {
-      case 'BLUFOR':
-        return useColorModeValue('blue.200', 'blue.600')
-      case 'REDFOR':
-        return useColorModeValue('red.200', 'red.700')
-      case 'INDEPENDENT':
-        return useColorModeValue('yellow.300', 'yellow.700')
-    }
+  public get colour(): () => string {
+    return () => {
+      switch (this.type) {
+        case 'BLUFOR':
+          return useColorModeValue('blue.200', 'blue.600');
+        case 'REDFOR':
+          return useColorModeValue('red.200', 'red.700');
+        case 'INDEPENDENT':
+          return useColorModeValue('yellow.300', 'yellow.700');
+      }
+    };
+  }
+
+  public get nameAsTag(): JSX.Element {
+    return (
+        <Tag bg={this.colour()}>{this.name}</Tag>
+    );
+  }
+
+  public get asTag(): JSX.Element {
+    return (
+        <Tag bg={this.colour()}>{this.localised}</Tag>
+    );
   }
 }
 
 export interface Layer {
-  layerString: string
-  map: Map
-  type: LayerType
-  tag?: string
-  faction1: Faction
-  faction2: Faction
-  warning?: string
-}
-
-function parseSpecialLayer(line: string): Layer {
-  const components = line.match(/((\w+)_(\w+)-(\w+))\s+-\s+(\w+)\s+vs\s+(\w+)\s+vs\s+\w+(?:\s+-\s+Warning:\s+(.+))?/)
-  if (!components) {
-    throw new Error(`Invalid layer line: ${line}`)
-  }
-  const [_, layerString, rawMap, rawFaction1, rawFaction2, verifyFaction1, verifyFaction2, warning] = components
-  if (rawFaction1 != verifyFaction1 || rawFaction2 != verifyFaction2) {
-    throw new Error(`Faction mismatch in layer line: ${line}`)
-  }
-  const map = Map.find(rawMap)
-  if (!map) throw new Error(`Map '${rawMap}' in '${layerString}' is unknown`)
-  const faction1 = Faction.find(rawFaction1)
-  if (!faction1) throw new Error(`Faction '${rawFaction1}' in '${line}' is unknown`)
-  const faction2 = Faction.find(rawFaction2)
-  if (!faction2) throw new Error(`Faction '${rawFaction2}' in '${line}' is unknown`)
-
-  return {
-    layerString: layerString,
-    map: map,
-    type: LayerType.Training,
-    tag: undefined,
-    faction1: faction1,
-    faction2: faction2,
-    warning: warning?.trim(),
-  }
+  layerString: string;
+  map: Map;
+  type: LayerType;
+  tag: string;
+  faction1: Faction;
+  faction2: Faction;
+  warning?: string;
 }
 
 function parseLayer(line: string): Layer {
-  // We will usually get layers in the form of `Narva_Skirmish_v1 - US vs RUS`.
-  // However, sometimes, we may get e.g. `PacificProvingGrounds_USMC-MEA - USMC vs MEA vs CIV`.
-  // As of Squad v3.0, these are technically only for 2 training maps, so we'll just parse them separately.
-  const components = line.match(/((\w+)_(\w+)_(\w+))\s+-\s+(\w+)\s+vs\s+(\w+)(?:\s+-\s+Warning:\s+(.+))?/)
+  const components = line.match(/((\w+)_(\w+)_(\w+))\s+-\s+(\w+)\s+vs\s+(\w+)(?:\s+-\s+Warning:\s+(.+))?/);
   if (!components) {
-    return parseSpecialLayer(line)
+    throw new Error(`Could not parse layer line: ${line}`);
   }
-  const [_, layerString, rawMap, rawType, tag, rawFaction1, rawFaction2, warning] = components
-  const map = Map.find(rawMap)
-  if (!map) throw new Error(`Map '${rawMap}' in '${layerString}' is unknown`)
-  const coercedType = LayerType.find(rawType)
-  if (!coercedType) throw new Error(`Type '${rawType}' in '${layerString}' is unknown`)
-  const faction1 = Faction.find(rawFaction1)
-  if (!faction1) throw new Error(`Faction '${rawFaction1}' in '${line}' is unknown`)
-  const faction2 = Faction.find(rawFaction2)
-  if (!faction2) throw new Error(`Faction '${rawFaction2}' in '${line}' is unknown`)
+  const [_, layerString, rawMap, rawType, tag, rawFaction1, rawFaction2, warning] = components;
+  const map = Map.find(rawMap);
+  if (!map) {
+    throw new Error(`Map '${rawMap}' in '${layerString}' is unknown`);
+  }
+  const coercedType = LayerType.find(rawType);
+  if (!coercedType) {
+    throw new Error(`Type '${rawType}' in '${layerString}' is unknown`);
+  }
+  const faction1 = Faction.find(rawFaction1);
+  if (!faction1) {
+    throw new Error(`Faction '${rawFaction1}' in '${line}' is unknown`);
+  }
+  const faction2 = Faction.find(rawFaction2);
+  if (!faction2) {
+    throw new Error(`Faction '${rawFaction2}' in '${line}' is unknown`);
+  }
 
   return {
     layerString: layerString,
@@ -217,15 +248,15 @@ function parseLayer(line: string): Layer {
     faction1: faction1,
     faction2: faction2,
     warning: warning?.trim(),
-  }
+  };
 }
 
 function parseLayers(list: string): Array<Layer> {
-  return list.split('\n').filter(l => !!l.trim()).map(l => parseLayer(l))
+  return list.split('\n').filter(l => !!l.trim()).map(l => parseLayer(l));
 }
 
 // Now close your eyes my, darlings.
-export const Layers: Array<Layer> = parseLayers(`
+export const LAYERS: Array<Layer> = parseLayers(`
 AlBasrah_AAS_v1 - US vs MEA
 AlBasrah_AAS_v2 - US vs INS
 AlBasrah_AAS_v3 - AUS vs INS
@@ -355,11 +386,6 @@ Gorodok_RAAS_v11 - CAF vs US
 Gorodok_Skirmish_v1 - GB vs RUS
 Gorodok_TC_v1 - US vs RUS
 Gorodok_TC_v2 - CAF vs RUS
-JensensRange_AUS-RUS - AUS vs RUS vs CIV - Warning: This is a training map, not intended for normal server rotations.
-JensensRange_CAF-INS - CAF vs INS vs CIV - Warning: This is a training map, not intended for normal server rotations.
-JensensRange_GB-MIL - GB vs MIL vs CIV - Warning: This is a training map, not intended for normal server rotations.
-JensensRange_US-RUS - US vs RUS vs CIV - Warning: This is a training map, not intended for normal server rotations.
-JensensRange_USMC-MEA - USMC vs MEA vs CIV - Warning: This is a training map, not intended for normal server rotations.
 Kamdesh_AAS_v1 - AUS vs RUS
 Kamdesh_Insurgency_v1 - AUS vs INS
 Kamdesh_Insurgency_v2 - GB vs INS
@@ -492,8 +518,6 @@ Narva_Skirmish_v1 - US vs RUS
 Narva_TA_v1 - RUS vs RUS
 Narva_TC_v1 - US vs RUS
 Narva_TC_v2 - US vs RUS
-PacificProvingGrounds_USMC-MEA - USMC vs MEA vs CIV - Warning: This is a training map, not intended for normal server rotations.
-PacificProvingGrounds_USMC-RUS - USMC vs RUS vs CIV - Warning: This is a training map, not intended for normal server rotations.
 Skorpo_AAS_v1 - US vs RUS
 Skorpo_Invasion_v1 - US vs MIL
 Skorpo_Invasion_v2 - RUS vs MIL
@@ -568,4 +592,4 @@ Yehorivka_TA_v1 - RUS vs RUS
 Yehorivka_TC_v1 - US vs RUS
 Yehorivka_TC_v2 - US vs RUS
 Yehorivka_TC_v3 - CAF vs RUS
-`)
+`);
