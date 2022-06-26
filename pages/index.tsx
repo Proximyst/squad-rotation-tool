@@ -26,7 +26,7 @@ import {LayerTable} from '../components/layer-table';
 import {AddIcon, EditIcon, InfoIcon, MoonIcon, SunIcon} from '@chakra-ui/icons';
 import {ReactNode, useState} from 'react';
 import {Faction, Layer, LayerType, Map} from '../components/layer-data';
-import {OnChangeValue, Select} from 'chakra-react-select';
+import {chakraComponents, OnChangeValue, Select, SelectComponentsConfig} from 'chakra-react-select';
 
 interface LayersState {
   rows: Array<Layer | undefined>;
@@ -68,6 +68,11 @@ function NewLayerModal(
     value: string;
   }
 
+  interface TagOption extends Option {
+    faction1: Faction;
+    faction2: Faction;
+  }
+
   const [newLayerState, setNewLayerState] = useState<NewLayer>({});
   const setMapState = (v?: OnChangeValue<Option, false>) => setNewLayerState({
     map: v ? Map.find(v.value) : undefined,
@@ -76,7 +81,7 @@ function NewLayerModal(
     map: newLayerState.map,
     type: v ? LayerType.find(v.value) : undefined,
   });
-  const setTagState = (v?: OnChangeValue<Option, false>) => setNewLayerState({
+  const setTagState = (v?: OnChangeValue<TagOption, false>) => setNewLayerState({
     map: newLayerState.map,
     type: newLayerState.type,
     tag: v ? v.value : undefined,
@@ -98,20 +103,34 @@ function NewLayerModal(
                                value: newLayerState.type?.name,
                              })}
                              onChange={setTypeState}/>;
+
+  const customTagComponents: SelectComponentsConfig<TagOption, false, any> = {
+    Option: ({children, ...props}) => (
+        <chakraComponents.Option {...props}>
+          <span>{children} {props.data.faction1.nameAsTag} {props.data.faction2.nameAsTag}</span>
+        </chakraComponents.Option>
+    ),
+    SingleValue: ({children, ...props}) => (
+        <chakraComponents.SingleValue {...props}>
+          <span>{children} {props.data.faction1.nameAsTag} {props.data.faction2.nameAsTag}</span>
+        </chakraComponents.SingleValue>
+    ),
+  };
   const tagOptions = newLayerState.map?.findLayers({type: newLayerState.type})?.map(l => ({
     label: l.tag.trim() ? l.tag : '[none]',
     value: l.tag,
-    toString(): string {
-      return `{label: ${this.label}, value: ${this.value}, layerString: ${l.layerString}}`;
-    },
+    faction1: l.faction1,
+    faction2: l.faction2,
   }));
-  console.log('Found these tags: ' + tagOptions);
   const tagSelect = <Select options={tagOptions}
                             isDisabled={!newLayerState.type}
+                            components={customTagComponents}
                             value={newLayerState.tag === undefined ? null : ({
                               label: newLayerState.tag.trim() ? newLayerState.tag : '[none]',
                               value: newLayerState.tag,
-                            })}
+                              faction1: newLayerState.layer?.faction1,
+                              faction2: newLayerState.layer?.faction2,
+                            } as TagOption)}
                             onChange={setTagState}/>;
 
   // We want to clean up the modal when we close it, so that no state is left behind.
@@ -151,8 +170,6 @@ function NewLayerModal(
                 </Tbody>
               </Table>
             </TableContainer>
-
-            v1 {Faction.UNITED_STATES_MARINE_CORPS.nameAsTag} {Faction.IRREGULAR_MILITIA.nameAsTag}
           </ModalBody>
         </ModalContent>
       </Modal>
